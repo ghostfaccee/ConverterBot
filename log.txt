@@ -1,0 +1,11 @@
+# 19.10.2025 - v0.1 BETA
+    * This release has many unfinished features. All these features will be implemented later. 
+       The README is not complete. A development log is being maintained.
+    * Bot functions have been implemented:
+       + Sending exchange rates in .json format
+       + Currency conversion
+    * Unimplemented functions:
+       - Formatting the /help command
+       - Preparation of documentation
+       - Implementation of the /start/match functions
+    * The rest of the bot's features cannot be added until the features mentioned above are implemented.
