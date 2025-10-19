@@ -13,7 +13,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def cmd_start(message: Message) -> None:
-    await message.answer('<b>ConverterBot v1</b> by @ghostfaccee\n Доступные команды:\n  ├── /start - старт бота\n  ├── /help - помощь\n  ├── /rate - текущий курс валют относительно USD\n  └── /match - математический калькулятор', parse_mode=ParseMode.HTML)
+    await message.answer('<b>ConverterBot v1</b> by @ghostfaccee\n Доступные команды:\n  ├── /start - запуск бота\n  ├── /help - помощь\n  ├── /rate - текущий курс валют относительно USD\n  └── /match - математический калькулятор', parse_mode=ParseMode.HTML)
 
 @router.message(Command('help'))
 async def cmd_help(message: Message) -> None:
