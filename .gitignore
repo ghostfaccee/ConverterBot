@@ -1,0 +1,5 @@
+.env
+.venv
+project.txt
+__pycache__
+*.json
