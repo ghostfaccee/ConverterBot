@@ -59,4 +59,19 @@ async def cmd_convert(message: Message) -> None:
 
 @router.message(Command('match'))
 async def cmd_match(message: Message) -> None:
-    await message.reply('match...')
+    try:
+        allowed_chars = set('1234567890*/()+-.')
+        text = message.text.strip().split()
+        calc = text[1]
+        if len(text) > 2:
+            await message.answer('Неверный формат команды. Подробнее: /help')
+            return
+        if all(char in allowed_chars for char in calc) and text:
+            result = eval(calc)
+            await message.answer(f'Результат: {result}')
+            return
+        else:
+            await message.answer('Неверный формат команды. Подробнее: /help')
+            return
+    except Exception as e:
+        await message.answer('Ошибка во время отправки сообщения.')
