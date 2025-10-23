@@ -5,6 +5,8 @@ from aiogram.enums import ParseMode
 
 
 from utils import api_requests
+from languages.languages import get_user_language, get_text
+from keyboards.keyboards import get_main_keyboard
 
 import datetime
 import json
@@ -13,7 +15,10 @@ router = Router()
 
 @router.message(CommandStart())
 async def cmd_start(message: Message) -> None:
-    await message.answer('<b>ConverterBot v1</b> by @ghostfaccee\n Доступные команды:\n  ├── /start - запуск бота\n  ├── /help - помощь\n  ├── /rate - текущий курс валют относительно USD\n  └── /match - математический калькулятор', parse_mode=ParseMode.HTML)
+    user_id = message.from_user.id
+    current_language = get_user_language(user_id)
+    text = get_text(user_id, 'start', current_language = current_language)
+    await message.answer(text, reply_markup = get_main_keyboard(user_id))
 
 @router.message(Command('help'))
 async def cmd_help(message: Message) -> None:

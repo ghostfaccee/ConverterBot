@@ -3,3 +3,4 @@
 project.txt
 __pycache__
 *.json
+sqlite3.db
