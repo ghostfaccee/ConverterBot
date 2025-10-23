@@ -7,6 +7,9 @@ MESSAGES = {
         'rate' : 'Текущий курс относительно USD 📊',
         'convert' : 'Результат перевода валют: {amount} {from_rate_currency} -> {result} {to_rate_currency}',
         'match' : 'Результат: {result}',
+        'change_lang' : 'Выберите язык',
+        'new_lang' : 'Ваш новый язык: {current_language}',
+        'error_sending' : 'Ошибка во время отправки',
         'settings' : '',
     },
     'en' : {
@@ -14,7 +17,10 @@ MESSAGES = {
         'help' : 'Help:\n 1. To convert one country\'s currency to another, use the /convert (number-1) (currency) (currency to convert to) command, where number-1 indicates the amount of the first currency. The currencies themselves must be specified in letters, for example, USD for the dollar, RUB for rubles, and so on.\n 2. To get a list of world currency exchange rates in JSON format, use the /rates command.\n 3. To calculate a mathematical expression, use the /match (math expression) command, where the following characters are allowed in the mathematical expression: 1234567890*/()+-. The mathematical expression itself must be written as one string, without spaces, so that the bot can correctly calculate the mathematical expression.',
         'rate' : 'Current exchange rate against USD 📊',
         'convert' : 'Currency conversion result: {amount} {from_rate_currency} -> {result} {to_rate_currency}',
+        'change_lang' : 'Select language',
+        'new_lang' : 'Your new language: {current_language}',
         'match' : 'Result: {result}',
+        'error_sending' : 'Error during sending',
         'settings' : '',
     }
 }
