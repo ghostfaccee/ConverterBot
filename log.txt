@@ -9,3 +9,9 @@
        - Preparation of documentation
        - Implementation of the /start /match functions
     * The rest of the bot's features cannot be added until the features mentioned above are implemented.
+
+# 24.10.2025 - v0.4 BETA
+    * At the moment this version is in the dev branch.
+    * Critical bugs related to callbacks have been fixed, dual-language support has been added, along with a sqlite3 database. 
+       Core functions have been updated and translated into two languages. Inline keyboards for switching languages ​​have been added.
+    * It is necessary to update the design of absolutely all existing functions, format the readme, prepare the bot for production, and clean up the code.

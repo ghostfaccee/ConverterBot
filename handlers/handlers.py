@@ -23,14 +23,14 @@ async def cmd_start(message: Message) -> None:
 
 @router.callback_query(F.data == 'help')
 async def callback_help(callback: CallbackQuery) -> None:
-    callback.answer()
+    await callback.answer()
     user_id = callback.from_user.id
     text = get_text(user_id, 'help')
     await callback.message.answer(text)
 
 @router.callback_query(F.data == 'rate')
 async def callback_rate(callback: CallbackQuery) -> None:
-    callback.answer()
+    await callback.answer()
     user_id = callback.from_user.id
     try:
         data = await api_requests.get_exchage_rate()
@@ -59,50 +59,67 @@ async def change_language(callback: CallbackQuery):
     current_language = get_user_language(user_id)
     text = get_text(user_id, 'new_lang', current_language = current_language)
     
-    await callback.message.edit_text(text, reply_markup=get_main_keyboard(user_id)
-    )
+    await callback.message.edit_text(text, reply_markup=get_main_keyboard(user_id))
 
 @router.message(Command('convert'))
 async def cmd_convert(message: Message) -> None:
+    user_id = message.from_user.id
     try:
         parts = message.text.split()
         if len(parts) != 4:
-            await message.answer('Неверный формат команды. Подробнее: /help')
+            invalid_format = get_text(user_id, 'invalid_command_format')
+            await message.answer(invalid_format)
             return
         try:
             amount = float(parts[1])
             from_rate = parts[2].upper()
             to_rate = parts[3].upper()
         except Exception:
-            await message.answer('Данные указаны не в том формате. Подробнее: /help')
+            invalid_format = get_text(user_id, 'invalid_data_format')
+            await message.answer(invalid_format)
             return
         data = await api_requests.get_exchage_rate()
         if from_rate not in data['conversion_rates'] or to_rate not in data['conversion_rates']:
-            await message.answer('Одна из валют не поддерживается. Подробнее: /help')
+            not_supported = get_text(user_id, 'not_supported')
+            await message.answer(not_supported)
             return
         from_rate_currency = (data['conversion_rates'][from_rate])
         to_rate_currency = (data['conversion_rates'][to_rate])
         result = str((amount / from_rate_currency) * to_rate_currency)
-        await message.answer(result)
-    except Exception as e:
-        print(e)
-        await message.answer('Ошибка во время отправки сообщения')
+        text = get_text(user_id, 'convert', amount = amount, from_rate = from_rate, result = result, to_rate = to_rate)
+        await message.answer(text)
+    except Exception:
+        error = get_text(user_id, 'error_sending')
+        await message.answer(error)
 
 @router.message(Command('match'))
 async def cmd_match(message: Message) -> None:
+    user_id = message.from_user.id
     try:
         allowed_chars = set('1234567890*/()+-.')
         text = message.text.strip().split()
         calc = text[1]
         if len(text) > 2:
-            await message.answer('Неверный формат команды. Подробнее: /help')
+            invalid_format = get_text(user_id, 'invalid_command_format')
+            await message.answer(invalid_format)
             return
         if all(char in allowed_chars for char in calc) and text:
             result = eval(calc)
-            await message.answer(f'Результат: {result}')
+            text = get_text(user_id, 'match', result = result)
+            await message.answer(text)
             return
         else:
-            await message.answer('Неверный формат команды. Подробнее: /help')
+            invalid_format = get_text(user_id, 'invalid_command_format')
+            await message.answer(invalid_format)
             return
-    except Exception as e:
-        await message.answer('Ошибка во время отправки сообщения.')
+    except Exception:
+        error_sending = get_text(user_id, 'error_sending')
+        await message.answer(error_sending)
+
+@router.callback_query(F.data == 'my_profile')
+async def callback_profile(callback: CallbackQuery) -> None:
+    await callback.answer()
+    user_id = callback.from_user.id
+    language = get_user_language(user_id)
+    text = get_text(user_id, 'profile', id = user_id, language = language)
+    await callback.message.answer(text)
