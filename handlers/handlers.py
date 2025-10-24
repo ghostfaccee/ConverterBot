@@ -23,14 +23,14 @@ async def cmd_start(message: Message) -> None:
 
 @router.callback_query(F.data == 'help')
 async def callback_help(callback: CallbackQuery) -> None:
-    callback.answer()
+    await callback.answer()
     user_id = callback.from_user.id
     text = get_text(user_id, 'help')
     await callback.message.answer(text)
 
 @router.callback_query(F.data == 'rate')
 async def callback_rate(callback: CallbackQuery) -> None:
-    callback.answer()
+    await callback.answer()
     user_id = callback.from_user.id
     try:
         data = await api_requests.get_exchage_rate()
@@ -59,8 +59,7 @@ async def change_language(callback: CallbackQuery):
     current_language = get_user_language(user_id)
     text = get_text(user_id, 'new_lang', current_language = current_language)
     
-    await callback.message.edit_text(text, reply_markup=get_main_keyboard(user_id)
-    )
+    await callback.message.edit_text(text, reply_markup=get_main_keyboard(user_id))
 
 @router.message(Command('convert'))
 async def cmd_convert(message: Message) -> None:
@@ -116,3 +115,11 @@ async def cmd_match(message: Message) -> None:
     except Exception:
         error_sending = get_text(user_id, 'error_sending')
         await message.answer(error_sending)
+
+@router.callback_query(F.data == 'my_profile')
+async def callback_profile(callback: CallbackQuery) -> None:
+    await callback.answer()
+    user_id = callback.from_user.id
+    language = get_user_language(user_id)
+    text = get_text(user_id, 'profile', id = user_id, language = language)
+    await callback.message.answer(text)

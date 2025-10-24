@@ -13,7 +13,7 @@ MESSAGES = {
         'not_supported' : 'Одна из валют не поддерживается, либо ее не существует.',
         'invalid_command_format' : 'Неверный формат команды.',
         'invalid_data_format' : 'Неверный формат данных.',
-        'settings' : '',
+        'profile' : 'Ваш профиль:\n Ваш ID: {id}\n Ваш язык: {language}',
     },
     'en' : {
         'start' : 'Hello! I\'m a currency converter bot. With my help, you can find out the exchange rates of all currencies in the world, convert one country\'s currency to another, and calculate the results, thanks to the built-in calculator. Your language: {current_language}',
@@ -27,7 +27,7 @@ MESSAGES = {
         'not_supported' : 'One of the currencies is not supported or does not exist.',
         'invalid_command_format' : 'Invalid command format.',
         'invalid_data_format' : 'Invalid data format.',
-        'settings' : '',
+        'profile' : 'Your profile:\n Your ID: {id}\n Your language: {language}',
     }
 }
 
