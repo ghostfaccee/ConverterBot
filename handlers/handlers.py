@@ -19,14 +19,14 @@ async def cmd_start(message: Message) -> None:
     user_id = message.from_user.id
     current_language = get_user_language(user_id)
     text = get_text(user_id, 'start', current_language = current_language)
-    await message.answer(text, reply_markup = get_main_keyboard(user_id))
+    await message.answer(text, reply_markup = get_main_keyboard(user_id), parse_mode = ParseMode.HTML)
 
 @router.callback_query(F.data == 'help')
 async def callback_help(callback: CallbackQuery) -> None:
     await callback.answer()
     user_id = callback.from_user.id
     text = get_text(user_id, 'help')
-    await callback.message.answer(text)
+    await callback.message.answer(text, parse_mode = ParseMode.HTML)
 
 @router.callback_query(F.data == 'rate')
 async def callback_rate(callback: CallbackQuery) -> None:
@@ -39,7 +39,7 @@ async def callback_rate(callback: CallbackQuery) -> None:
             json.dump(data, f, indent = 2, ensure_ascii = False)
         file = FSInputFile(filename)
         success_text = get_text(user_id, 'rate')
-        await callback.message.answer_document(file, caption=success_text)
+        await callback.message.answer_document(file, caption=success_text, parse_mode = ParseMode.HTML)
     except Exception as e:
         error_text = get_text(user_id, 'error_sending')
         await callback.message.answer(error_text)
@@ -49,7 +49,7 @@ async def callback_rate(callback: CallbackQuery) -> None:
 async def cmd_language(message: Message) -> None:
     user_id = message.from_user.id
     text = get_text(user_id, 'change_lang')
-    await message.answer(text, reply_markup=get_language_keyboard())
+    await message.answer(text, reply_markup=get_language_keyboard(), parse_mode = ParseMode.HTML)
 
 @router.callback_query(F.data.startswith("lang_"))
 async def change_language(callback: CallbackQuery):
@@ -59,7 +59,7 @@ async def change_language(callback: CallbackQuery):
     current_language = get_user_language(user_id)
     text = get_text(user_id, 'new_lang', current_language = current_language)
     
-    await callback.message.edit_text(text, reply_markup=get_main_keyboard(user_id))
+    await callback.message.edit_text(text, reply_markup=get_main_keyboard(user_id), parse_mode = ParseMode.HTML)
 
 @router.message(Command('convert'))
 async def cmd_convert(message: Message) -> None:
@@ -71,7 +71,7 @@ async def cmd_convert(message: Message) -> None:
             await message.answer(invalid_format)
             return
         try:
-            amount = float(parts[1])
+            amount = abs(float(parts[1]))
             from_rate = parts[2].upper()
             to_rate = parts[3].upper()
         except Exception:
@@ -85,9 +85,9 @@ async def cmd_convert(message: Message) -> None:
             return
         from_rate_currency = (data['conversion_rates'][from_rate])
         to_rate_currency = (data['conversion_rates'][to_rate])
-        result = str((amount / from_rate_currency) * to_rate_currency)
+        result = f'{((amount / from_rate_currency) * to_rate_currency):.2f}'
         text = get_text(user_id, 'convert', amount = amount, from_rate = from_rate, result = result, to_rate = to_rate)
-        await message.answer(text)
+        await message.answer(text, parse_mode = ParseMode.HTML)
     except Exception:
         error = get_text(user_id, 'error_sending')
         await message.answer(error)
@@ -106,7 +106,7 @@ async def cmd_match(message: Message) -> None:
         if all(char in allowed_chars for char in calc) and text:
             result = eval(calc)
             text = get_text(user_id, 'match', result = result)
-            await message.answer(text)
+            await message.answer(text, parse_mode = ParseMode.HTML)
             return
         else:
             invalid_format = get_text(user_id, 'invalid_command_format')
@@ -122,4 +122,4 @@ async def callback_profile(callback: CallbackQuery) -> None:
     user_id = callback.from_user.id
     language = get_user_language(user_id)
     text = get_text(user_id, 'profile', id = user_id, language = language)
-    await callback.message.answer(text)
+    await callback.message.answer(text, parse_mode = ParseMode.HTML)

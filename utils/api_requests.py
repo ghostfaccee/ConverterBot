@@ -9,6 +9,6 @@ async def get_exchage_rate() -> dict:
                 if response.status == 200:
                     return await response.json()
                 else:
-                    return {'Error': 'API недоступен'}
+                    return {'Error': 'API is unavailable'}
     except Exception:
-        return {'Error': 'Ошибка соединения'}
+        return {'Error': 'Connection error'}
