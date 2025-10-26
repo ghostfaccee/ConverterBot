@@ -18,7 +18,7 @@ Some project files are hidden from the user for security reasons. The bot won't 
 * **utils/** - Project utilities. Sending API requests to the ExchangeRate-API.
 * **bot.py** - The main project file. This is the file from which the project must be launched.
 * **config.py** - Project configurations.
-* **log.py** - Project update and change log.
+* **changelog.txt** - Project update and change log.
 * **LICENSE** - Project license.
 * **README.md** - Main project documentation.
 * **requirements.txt** - Project dependencies.
