@@ -1,3 +1,4 @@
+import os
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, FSInputFile, CallbackQuery
 from aiogram import Router, F
@@ -32,6 +33,7 @@ async def callback_help(callback: CallbackQuery) -> None:
 async def callback_rate(callback: CallbackQuery) -> None:
     await callback.answer()
     user_id = callback.from_user.id
+    filename = None
     try:
         data = await api_requests.get_exchage_rate()
         filename = f'exchange_{datetime.datetime.now()}.json'
@@ -43,6 +45,9 @@ async def callback_rate(callback: CallbackQuery) -> None:
     except Exception as e:
         error_text = get_text(user_id, 'error_sending')
         await callback.message.answer(error_text)
+    finally:
+        if filename and os.path.exists(filename):
+            os.remove(filename)
 
 
 @router.message(Command('language'))

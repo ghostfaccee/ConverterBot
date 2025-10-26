@@ -15,3 +15,7 @@
     * Critical bugs related to callbacks have been fixed, dual-language support has been added, along with a sqlite3 database. 
        Core functions have been updated and translated into two languages. Inline keyboards for switching languages ​​have been added.
     * It is necessary to update the design of absolutely all existing functions, format the readme, prepare the bot for production, and clean up the code.
+
+# 26.10.2025 - v1.0 - RELEASE
+    * Fully written documentation, privacy policies, and disclaimers
+    * The project is ready for release
